@@ -1,0 +1,17 @@
+{
+  "Name": "spr-usque",
+  "ComposeFilePath": "plugins/user/spr-usque/docker-compose.yml",
+  "UnixPath": "/state/plugins/spr-usque/socket",
+  "URI": "spr-usque",
+  "HasUI": true,
+  "Icon": "Cloud",
+  "HasTopology": true,
+  "SandboxedUI": false,
+  "InstallTokenPath": "/configs/plugins/spr-usque/api-token",
+  "NetworkCapabilities": {
+    "Interface": "spr-usque",
+    "Policies": ["wan", "dns"],
+    "Groups": ["warp"]
+  },
+  "Enabled": true
+}

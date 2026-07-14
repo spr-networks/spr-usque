@@ -1,0 +1,48 @@
+x-labels:
+  &default-labels
+  # constant (not $CI) so digests are reproducible across CI/local
+  org.supernetworks.ci: "true"
+  org.supernetworks.version: ${RELEASE_VERSION:-latest}${RELEASE_CHANNEL:-}
+
+services:
+  spr-usque:
+    container_name: spr-usque
+    image: ghcr.io/spr-networks/spr-usque:${RELEASE_VERSION:-latest}${RELEASE_CHANNEL:-}
+    # SPR starts custom plugins with `docker compose up -d`; without an
+    # explicit pull policy, Compose reuses a cached `latest` image even after
+    # this repository and the published image have been updated.
+    pull_policy: ${PULL_POLICY:-always}
+    build:
+      context: "${BUILDCTX:-.}"
+      labels: *default-labels
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    security_opt:
+      - no-new-privileges:true
+    sysctls:
+      # Native TUN gateway: forward routed SPR traffic and disable reverse-path
+      # filtering because internet replies correctly arrive on warp0.
+      - net.ipv4.ip_forward=1
+      - net.ipv6.conf.all.forwarding=1
+      - net.ipv4.conf.all.rp_filter=0
+      - net.ipv4.conf.default.rp_filter=0
+    networks:
+      usquenet:
+        ipv4_address: 172.30.118.2
+    volumes:
+      - "${SUPERDIR}./state/plugins/spr-usque:/state/plugins/spr-usque"
+      - "${SUPERDIR}./configs/base/config.sh:/configs/base/config.sh:ro"
+      - "${SUPERDIR}./configs/plugins/spr-usque:/configs/spr-usque"
+
+# The stable container IP is the SPR forwarding destination. The bridge name
+# must match plugin.json and the custom_interface rule in install.sh.
+networks:
+  usquenet:
+    name: spr-usque
+    driver_opts:
+      com.docker.network.bridge.name: spr-usque
+    ipam:
+      config:
+        - subnet: 172.30.118.0/24
