@@ -331,6 +331,8 @@ export default function Plugin() {
   const connected = !!status?.Connected
   const connectivity = status?.Connectivity || {}
   const verified = connected && !!connectivity.OK
+  const verificationPending = connected && !!connectivity.Pending
+  const verificationStale = connected && !!connectivity.Stale
   const gatewayIP = status?.GatewayIP || '172.30.118.2'
   const tunnelInterface = status?.TunnelInterface || 'warp0'
   const connectError = portError(connectPort)
@@ -605,9 +607,15 @@ export default function Plugin() {
     ? 'Establishing MASQUE tunnel'
     : 'Gateway stopped'
   const stateHint = verified
-    ? `${connectivity.Colo || 'Cloudflare edge'} · exit ${connectivity.IP || '—'}`
+    ? `${connectivity.Colo || 'Cloudflare edge'} · exit ${connectivity.IP || '—'}${
+        verificationStale ? ' · last verified' : ''
+      }`
+    : verificationPending
+    ? 'WARP tunnel is up · verifying the Cloudflare exit…'
     : connected && connectivity.Error
-    ? `Interface is up; verification failed: ${connectivity.Error}`
+    ? 'WARP tunnel is up · live exit verification is temporarily unavailable.'
+    : connected
+    ? 'WARP tunnel is up and forwarding is enabled.'
     : processRunning
     ? 'warp0 is starting. Transit traffic remains fail-closed until connected.'
     : status?.LastError
@@ -622,7 +630,7 @@ export default function Plugin() {
         <VStack space="lg">
           <HStack justifyContent="space-between" alignItems="center" flexWrap="wrap" gap="$3">
             <HStack space="md" alignItems="center" flexShrink={1}>
-              <StatusDot online={verified} warn={processRunning && !verified} size={12} />
+              <StatusDot online={connected} warn={processRunning && !connected} size={12} />
               <VStack space="xs" flexShrink={1}>
                 <Heading size="md" color="$textLight900" sx={{ _dark: { color: '$textDark50' } }}>
                   {stateTitle}
@@ -723,17 +731,17 @@ export default function Plugin() {
             p="$3.5"
             borderRadius="$xl"
             borderWidth={1}
-            borderColor={verified ? '$success200' : '$muted200'}
+            borderColor={connected ? '$success200' : '$muted200'}
             bg="$backgroundContentLight"
             sx={{
               _dark: {
                 bg: '$backgroundContentDark',
-                borderColor: verified ? '$success800' : '$borderColorCardDark'
+                borderColor: connected ? '$success800' : '$borderColorCardDark'
               }
             }}
           >
             <HStack space="sm" alignItems="flex-start">
-              <StatusDot online={verified} warn={processRunning && !verified} size={9} />
+              <StatusDot online={connected} warn={processRunning && !connected} size={9} />
               <VStack space="xs" flex={1}>
                 <Text
                   size="sm"
@@ -741,10 +749,10 @@ export default function Plugin() {
                   color="$textLight900"
                   sx={{ _dark: { color: '$textDark50' } }}
                 >
-                  {verified ? 'Forwarding destination is online' : 'Fail-closed protection is active'}
+                  {connected ? 'Forwarding destination is online' : 'Fail-closed protection is active'}
                 </Text>
                 <Text size="xs" color="$muted500" lineHeight="$sm">
-                  {verified
+                  {connected
                     ? 'Traffic policy-routed to this destination is SNATed to the enrolled WARP address and returned to the original SPR client.'
                     : 'The policy table ends in an unreachable route, so selected traffic cannot escape through the container’s ordinary WAN path.'}
                 </Text>

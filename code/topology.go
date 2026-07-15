@@ -1,10 +1,8 @@
 package main
 
 import (
-	"context"
 	"encoding/json"
 	"net/http"
-	"time"
 )
 
 type TopoNode struct {
@@ -88,11 +86,7 @@ func handleTopology(w http.ResponseWriter, r *http.Request) {
 
 	var trace map[string]string
 	if connected {
-		ctx, cancel := context.WithTimeout(r.Context(), 4*time.Second)
-		defer cancel()
-		if raw, err := fetchTraceViaInterface(ctx, iface); err == nil {
-			trace = parseTrace(raw)
-		}
+		trace = traceSnapshot(iface, state.ConnectedAt).Fields
 	}
 
 	w.Header().Set("Content-Type", "application/json")

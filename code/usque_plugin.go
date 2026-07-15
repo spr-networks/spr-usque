@@ -112,15 +112,18 @@ func handleStatus(w http.ResponseWriter, r *http.Request) {
 		status["Endpoint"] = endpoint
 	}
 
-	connectivity := map[string]interface{}{"OK": false}
+	connectivity := map[string]interface{}{"OK": false, "Pending": false, "Stale": false}
 	if connected {
-		ctx, cancel := context.WithTimeout(r.Context(), 8*time.Second)
-		defer cancel()
-		raw, err := fetchTraceViaInterface(ctx, iface)
-		if err != nil {
-			connectivity["Error"] = err.Error()
-		} else {
-			fields := parseTrace(raw)
+		snapshot := traceSnapshot(iface, state.ConnectedAt)
+		connectivity["Pending"] = snapshot.Pending
+		connectivity["Stale"] = snapshot.Stale
+		connectivity["CheckedAt"] = snapshot.CheckedAt
+		connectivity["VerifiedAt"] = snapshot.VerifiedAt
+		if snapshot.Error != "" {
+			connectivity["Error"] = snapshot.Error
+		}
+		if len(snapshot.Fields) > 0 {
+			fields := snapshot.Fields
 			connectivity["OK"] = fields["warp"] == "on" || fields["warp"] == "plus"
 			connectivity["Warp"] = fields["warp"]
 			connectivity["Colo"] = fields["colo"]
