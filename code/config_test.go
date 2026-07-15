@@ -112,7 +112,7 @@ func TestBuildNativeTunArgs(t *testing.T) {
 	got := buildNativeTunArgs(s)
 	want := []string{
 		"-c", WarpConfigFile, "nativetun", "--interface-name", "warp0",
-		"--mtu", "1280", "--connect-port", "443", "--always-reconnect",
+		"--mtu", "1400", "--connect-port", "443", "--always-reconnect",
 		"--on-connect", TunnelUpHook, "--on-disconnect", TunnelDownHook,
 	}
 	if !reflect.DeepEqual(got, want) {

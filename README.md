@@ -14,7 +14,7 @@ MASQUE. Client devices do not need SOCKS, HTTP proxy, or WARP software.
 ## What it does
 
 - Enrolls a free WARP device or a Cloudflare Zero Trust device from the SPR UI
-- Runs upstream usque `nativetun` on Linux (`warp0`, MTU 1280)
+- Runs upstream usque `nativetun` on Linux (`warp0`, MTU 1400)
 - Advertises **Cloudflare WARP** through the topology `Sinks` contract so SPR can
   offer the container as a forwarding destination
 - Uses a stable custom-interface gateway: `spr-usque` / `172.30.118.2`

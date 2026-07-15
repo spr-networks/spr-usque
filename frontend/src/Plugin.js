@@ -705,7 +705,7 @@ export default function Plugin() {
             <PathNode
               eyebrow="Native TUN"
               title={tunnelInterface}
-              detail={`MTU ${status?.TunnelMTU || 1280}`}
+              detail={`MTU ${status?.TunnelMTU || 1400}`}
               online={connected}
               warn={processRunning && !connected}
             />

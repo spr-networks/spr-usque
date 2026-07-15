@@ -14,7 +14,7 @@ import (
 var UsquePath = "/usr/bin/usque"
 
 const TunInterfaceName = "warp0"
-const TunnelMTU = 1280
+const TunnelMTU = 1400
 const TunnelUpHook = "/scripts/tunnel-up.sh"
 const TunnelDownHook = "/scripts/tunnel-down.sh"
 
