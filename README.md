@@ -1,5 +1,7 @@
 # spr-usque
 
+## NOTE: made by codex
+
 A Linux-only Cloudflare WARP egress gateway plugin for
 [SPR](https://github.com/spr-networks/super), powered by
 [usque](https://github.com/Diniboy1123/usque).
