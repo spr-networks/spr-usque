@@ -12,7 +12,7 @@ func TestBuildTopologyDisconnectedSink(t *testing.T) {
 		t.Fatalf("unexpected disconnected topology: %+v", topo)
 	}
 	sink := topo.Sinks[0]
-	if sink.ID != "warp" || sink.Iface != "spr-usque" || sink.IP != "172.30.118.2" || sink.Online {
+	if sink.ID != "warp" || sink.Iface != "kusque0" || sink.IP != "172.30.118.2" || sink.Online {
 		t.Fatalf("bad forwarding sink: %+v", sink)
 	}
 }
@@ -48,7 +48,7 @@ func TestTopologyJSONContract(t *testing.T) {
 		t.Fatal(err)
 	}
 	text := string(data)
-	for _, field := range []string{`"Nodes"`, `"Edges"`, `"Sinks"`, `"Iface":"spr-usque"`} {
+	for _, field := range []string{`"Nodes"`, `"Edges"`, `"Sinks"`, `"Iface":"kusque0"`} {
 		if !strings.Contains(text, field) {
 			t.Errorf("missing %s in %s", field, text)
 		}

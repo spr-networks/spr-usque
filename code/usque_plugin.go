@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-var UNIX_PLUGIN_LISTENER = "/state/plugins/spr-usque/socket"
+var UNIX_PLUGIN_LISTENER = "/run/spr-krun-plugin/spr-usque.sock"
 
 func getContainerIP() string {
 	iface, err := net.InterfaceByName("eth0")
@@ -90,7 +90,7 @@ func handleStatus(w http.ResponseWriter, r *http.Request) {
 		"Uptime":           ps.Uptime,
 		"LastError":        ps.LastError,
 		"GatewayIP":        getContainerIP(),
-		"GatewayInterface": "spr-usque",
+		"GatewayInterface": "kusque0",
 		"TunnelInterface":  iface,
 		"TunnelMTU":        TunnelMTU,
 		"EndpointVersion":  settings.EndpointVersion,

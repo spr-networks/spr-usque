@@ -54,7 +54,7 @@ func buildTopology(connected bool, containerIP string, trace map[string]string) 
 			From: "root", To: "usque-gateway", Layer: "vpn", Kind: "masque",
 		})
 		topo.Sinks = []TopoSink{{
-			ID: "warp", Name: "Cloudflare WARP", Iface: "spr-usque",
+			ID: "warp", Name: "Cloudflare WARP", Iface: "kusque0",
 			IP: containerIP, Online: sinkOnline,
 		}}
 	}
