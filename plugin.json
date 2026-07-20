@@ -1,6 +1,6 @@
 {
   "Name": "spr-usque",
-  "ComposeFilePath": "plugins/user/spr-usque/docker-compose-krun.yml",
+  "Runtime": "kvm",
   "UnixPath": "/state/plugins/spr-usque/socket",
   "URI": "spr-usque",
   "HasUI": true,
