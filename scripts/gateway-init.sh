@@ -7,8 +7,8 @@ set -eu
 TABLE=51820
 PREF=100
 
-# These are guest-kernel settings. The krun Compose override intentionally
-# clears Docker host-network sysctls and configures them here instead.
+# These are guest-kernel settings. The krun Compose override clears OCI
+# namespace sysctls and configures them inside the guest instead.
 printf '1' > /proc/sys/net/ipv4/ip_forward
 printf '1' > /proc/sys/net/ipv6/conf/all/forwarding
 printf '0' > /proc/sys/net/ipv4/conf/all/rp_filter

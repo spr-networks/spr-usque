@@ -90,7 +90,7 @@ func handleStatus(w http.ResponseWriter, r *http.Request) {
 		"Uptime":           ps.Uptime,
 		"LastError":        ps.LastError,
 		"GatewayIP":        getContainerIP(),
-		"GatewayInterface": "kusque0",
+		"GatewayInterface": "spr-usque",
 		"TunnelInterface":  iface,
 		"TunnelMTU":        TunnelMTU,
 		"EndpointVersion":  settings.EndpointVersion,
