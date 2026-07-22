@@ -6,7 +6,7 @@
   "HasUI": true,
   "Icon": "Cloud",
   "HasTopology": true,
-  "SandboxedUI": false,
+  "SandboxedUI": true,
   "NetworkCapabilities": {
     "Interface": "spr-usque",
     "DeviceMAC": "02:53:50:52:4b:12",
