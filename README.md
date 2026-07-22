@@ -105,7 +105,7 @@ traffic policy.
 
 ## API
 
-All endpoints are served on `/state/plugins/spr-usque/socket`; SPR proxies them at
+All endpoints are served on `/state/plugins/spr-usque/socket.sock`; SPR proxies them at
 `/plugins/spr-usque/...`.
 
 | Method | Path | Description |
