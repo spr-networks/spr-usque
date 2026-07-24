@@ -7,7 +7,7 @@ x-labels:
 services:
   spr-usque:
     container_name: spr-usque
-    image: ghcr.io/spr-networks/spr-usque:${RELEASE_VERSION:-latest}${RELEASE_CHANNEL:-}
+    image: ghcr.io/spr-networks/spr-usque:latest
     # SPR starts custom plugins with `docker compose up -d`; without an
     # explicit pull policy, Compose reuses a cached `latest` image even after
     # this repository and the published image have been updated.
