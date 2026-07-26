@@ -29,3 +29,4 @@ networks:
     name: spr-usque
     driver_opts:
       com.docker.network.bridge.name: spr-usque
+      com.docker.network.bridge.inhibit_ipv4: "true"
