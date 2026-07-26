@@ -76,19 +76,6 @@ TUN is connected. Primary gateway discovery uses the fixed IPv4 destination
 client IPv6 additionally depends on the host and SPR forwarding path supporting
 IPv6 next hops.
 
-## CLI install
-
-```bash
-cd /home/spr/super/plugins/
-git clone https://github.com/spr-networks/spr-usque
-cd spr-usque
-./install.sh
-```
-
-The installer builds and starts the container, stores the SPR API token, and
-registers the stable container address as the `spr-usque` custom interface with
-`wan` and `dns` policies plus the `warp` group.
-
 For a direct firewall API rule, the route-destination shape used by SPR is:
 
 ```json

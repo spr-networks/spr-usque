@@ -30,19 +30,16 @@ services:
       - net.ipv4.conf.default.rp_filter=0
     networks:
       usquenet:
-        ipv4_address: 172.30.118.2
     volumes:
       - "${SUPERDIR}./state/plugins/spr-usque:/state/plugins/spr-usque"
       - "${SUPERDIR}./configs/base/config.sh:/configs/base/config.sh:ro"
       - "${SUPERDIR}./configs/plugins/spr-usque:/configs/spr-usque"
 
-# The stable container IP is the SPR forwarding destination. The bridge name
-# must match plugin.json and the custom_interface rule in install.sh.
+# The bridge name must match NetworkCapabilities.Interface in plugin.json.
+# Docker assigns the default-runtime endpoint dynamically; KVM guests use SPR
+# DHCP with NetworkCapabilities.DeviceMAC.
 networks:
   usquenet:
     name: spr-usque
     driver_opts:
       com.docker.network.bridge.name: spr-usque
-    ipam:
-      config:
-        - subnet: 172.30.118.0/24
