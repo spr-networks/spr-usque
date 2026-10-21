@@ -10,6 +10,7 @@
   "NetworkCapabilities": {
     "Interface": "spr-usque",
     "DeviceMAC": "02:53:50:52:4b:12",
+    "TransparentSink": true,
     "Policies": ["wan", "dns"],
     "Groups": ["warp"]
   },
